@@ -39,7 +39,12 @@ SECRET_KEY = 'django-insecure-#u7sf3s)99l2d)vyvdl+-wwui+(d*f&w&yml1(#*=bcy(uxzk^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'starbust-bemobi-3912b31e3966.herokuapp.com',
+    'https://starburst.vercel.app/',
+    'localhost', 
+    '127.0.0.1',
+]
 
 
 # Application definition
