@@ -50,6 +50,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'starburst.api',
+    'starburst.models',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
