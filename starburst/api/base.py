@@ -1,7 +1,7 @@
 from abc import ABC
 
 from starburst.error import RequestError, RequestErrorCode
-from starburst.models.Client import Client
+from starburst.models.models import get_client
 
 
 class BaseApiIntegration(ABC):
@@ -11,7 +11,7 @@ class BaseApiIntegration(ABC):
         self.request_data = request_data
 
         try:
-            self.client = Client.objects.get(str_id=request_data['client'])
-        except RequestError:
+            self.client = get_client(client_id=request_data.get('client'))
+        except KeyError:
             raise RequestError(RequestErrorCode.CLIENT_NOT_FOUND)
 

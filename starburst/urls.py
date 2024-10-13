@@ -22,6 +22,6 @@ from starburst import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('chatbot.urls')),
-    path('payment-analysis/', views.payment_analysis, name='payment_analysis'),
+    path('payment/analysis', views.payment_analysis, name='payment_analysis'),
     path('subscription/mobile/data-analysis', views.mobile_data_analysis, name='mobile_data_analysis'),
 ]

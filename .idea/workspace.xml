@@ -20,6 +20,12 @@
       <change afterPath="$PROJECT_DIR$/starburst/models/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starburst/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/starburst/models/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starburst/api/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/api/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starburst/api/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/api/payment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starburst/api/subscription.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/api/subscription.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starburst/models/Client.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/starburst/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starburst/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/starburst/views.py" afterDir="false" />
     </list>
@@ -60,7 +66,7 @@
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="starburst" type="Python.DjangoServer" factoryName="Django server">
       <module name="starburst" />
@@ -122,5 +128,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/starburst/views.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/starburst/api/payment.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
