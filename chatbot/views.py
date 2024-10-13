@@ -103,3 +103,30 @@ def chatbot_view(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+
+def payment_analysis_response(data):
+    try:
+        message = "Deve ser montado um relatório com base na analise da recorrencia de pagamentos do usuario com os dados que foram enviados para você."
+        prompt = f"{data}User: {message}\nChatbot: Você é um assistente de suporte chamado Bemobi AI, responsável por oferecer um atendimento excepcional focado nos serviços de assinatura da Bemobi, como os planos Omni Pay e Omni Engage. Seu papel é esclarecer dúvidas do usuário sobre o uso dos planos contratados, histórico de pagamentos e métodos de pagamento disponíveis. Não forneça informações ou responda perguntas que não estejam relacionadas ao suporte ao cliente, como eventos, shows, política, ou notícias gerais. Caso o usuário tenha faturas em atraso, ofereça imediatamente opções de pagamento adequadas ao perfil do cliente para resolver a situação o mais rápido possível, você possui os dados do cliente então ele não ira te fornecer nada no chat."
+        model = genai.GenerativeModel("gemini-1.5-flash")
+
+        response = model.generate_content(prompt)
+        chatbot_reply = response.text.strip()
+
+        return JsonResponse({'reply': chatbot_reply})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+def mobile_data_response(data):
+    try:
+        message = "Você deve pegar os dados que estão sendo enviados, analisar e enviar para o usuario um relatório do consumo de dados moveis, sugerindo uma melhor opção de plano caso necessario."
+        prompt = f"{data}User: {message}\nChatbot: Você é um assistente de suporte chamado Bemobi AI, responsável por oferecer um atendimento excepcional focado nos serviços de assinatura da Bemobi, como os planos Omni Pay e Omni Engage. Seu papel é esclarecer dúvidas do usuário sobre o uso dos planos contratados, histórico de pagamentos e métodos de pagamento disponíveis. Não forneça informações ou responda perguntas que não estejam relacionadas ao suporte ao cliente, como eventos, shows, política, ou notícias gerais. Caso o usuário tenha faturas em atraso, ofereça imediatamente opções de pagamento adequadas ao perfil do cliente para resolver a situação o mais rápido possível, você possui os dados do cliente então ele não ira te fornecer nada no chat."
+        model = genai.GenerativeModel("gemini-1.5-flash")
+
+        response = model.generate_content(prompt)
+        chatbot_reply = response.text.strip()
+
+        return JsonResponse({'reply': chatbot_reply})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
+from chatbot.views import payment_analysis_response
 from starburst.api.base import BaseApiIntegration
 from starburst.error import RequestError, RequestErrorCode
 from starburst.models.models import get_user
@@ -36,8 +37,7 @@ class PaymentIntegration(BaseApiIntegration):
         is_debtor = total_delays > 0
         eligible_for_bonuses = client['max_delays'] < total_delays and len(txn_sequence) > client['min_sequence']
 
-
-        return JsonResponse({
+        bot_data = {
             'user': user['name'],
             'client': client['name'],
             'payment_sequence': len(txn_sequence),
@@ -46,4 +46,6 @@ class PaymentIntegration(BaseApiIntegration):
             'percentage_of_delays': percentage_of_delays,
             'is_debtor': is_debtor,
             'eligible_for_bonuses': eligible_for_bonuses
-        })
+        }
+
+        return payment_analysis_response(bot_data)

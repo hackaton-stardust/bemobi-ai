@@ -3,6 +3,7 @@ import calendar
 from django.http import JsonResponse
 from django.utils import timezone
 
+from chatbot.views import mobile_data_response
 from starburst.api.base import BaseApiIntegration
 from starburst.error import RequestError, RequestErrorCode
 from starburst.models.models import get_user
@@ -55,7 +56,7 @@ class Subscription(BaseApiIntegration):
             for info in info_contratos if info['ano'] == year and info['mes'] < month
         ]
 
-        return JsonResponse({
+        bot_data = {
             "user_name": user_id,
             "report_period": {
                 "start_date": f"{year}-{month}-01",
@@ -71,4 +72,6 @@ class Subscription(BaseApiIntegration):
             "historical_usage": {
                 "previous_months": previous_months
             }
-        })
+        }
+
+        return mobile_data_response(bot_data)
