@@ -88,28 +88,12 @@ WSGI_APPLICATION = 'starburst.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-class DisableMigrations:
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
-        return None
-
-if 'DYNO' in os.environ:  # Verifica se está rodando no Heroku
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.dummy',
-        }
-    }
-    MIGRATION_MODULES = DisableMigrations()
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-MIGRATION_MODULES = DisableMigrations()
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
