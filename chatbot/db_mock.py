@@ -1,4 +1,3 @@
-
 mocked_users = [
     {
         'id': 1,
@@ -8,6 +7,18 @@ mocked_users = [
         'telefone': '5548991743762',
         'empresas': ['vivo', 'claro'],
         'payment_methods': ['mastercard', 'pix'],
+        'payment_history': {
+            'vivo': {'pagas': 40, 'atrasadas': 2},
+            'claro': {'pagas': 35, 'atrasadas': 0},
+        },
+        'since': '2020-01-01',
+        'status': 'ativo',
+        'saldo_pendente': 100.0,
+        'negociacao': {
+            'fatura':'vivo',
+            'valor': 92.0,
+            'data': '2022-01-01
+        }
     },
     {
         'id': 2,
@@ -17,6 +28,18 @@ mocked_users = [
         'telefone': '5548912345678',
         'empresas': ['estacio'],
         'payment_methods': ['pix'],
+        'payment_history': {
+            'vivo': {'pagas': 40, 'atrasadas': 2},
+            'claro': {'pagas': 35, 'atrasadas': 0},
+        },
+        'since': '2020-01-01',
+        'status': 'ativo',
+        'saldo_pendente': 100.0,
+        'negociacao': {
+            'fatura':'vivo',
+            'valor': 92.0,
+            'data': '2022-01-01
+        }
     }
 ]
 

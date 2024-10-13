@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import generate_story 
+from .views import chatbot_view 
 
 urlpatterns = [
-    path('generate-story/', generate_story, name='generate_story'),
+    path('chatbot_view/', chatbot_view, name='chatbot_view'),
 ]
