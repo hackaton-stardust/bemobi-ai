@@ -88,12 +88,31 @@ WSGI_APPLICATION = 'starburst.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.dummy',
-    }
-}
+# Verifique se estamos no Heroku
+ON_HEROKU = 'DYNO' in os.environ
 
+if ON_HEROKU:
+    # Configurações específicas para o Heroku
+    DATABASES = {
+         'default': {
+            'ENGINE': 'django.db.backends.dummy',
+        }
+    }
+    MIGRATION_MODULES = DisableMigrations()
+    DEBUG = config('DEBUG', default=False, cast=bool)
+else:
+    # Configurações específicas para o ambiente local
+    DATABASES = {
+        'default': {
+            'ENGINE': config('DB_ENGINE'),
+            'NAME': config('POSTGRES_DB'),
+            'USER': config('POSTGRES_USER'),
+            'PASSWORD': config('POSTGRES_PASSWORD'),
+            'HOST': config('POSTGRES_HOST'),
+            'PORT': config('POSTGRES_PORT'),
+        }
+    }
+    DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
