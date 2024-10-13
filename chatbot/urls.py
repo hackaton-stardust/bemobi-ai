@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import generate_story 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('generate-story/', generate_story, name='generate_story'),
 ]
