@@ -3,6 +3,16 @@ from django.views.decorators.csrf import csrf_exempt
 import google.generativeai as genai 
 import json
 
+# Lista de palavras-chave relacionadas ao suporte a clientes
+support_keywords = [
+    'plano', 'saldo', 'pagamento', 'fatura', 'dado', 'assinatura', 'empresa', 
+    'recorrente', 'atraso', 'pago', 'contratar', 'renovar', 'cancelar', 'negociar', 'uso',
+    'olá', 'oi', 'bom dia', 'boa tarde', 'boa noite', 'ajuda', 'suporte', 'informa' 'consumo', 'pagar'
+    'vivo', 'claro', 'tim', 'oi', 'mastercard', 'visa', 'pix', 'boleto', 'cartão', 'crédito', 'débito',
+    'pendente', 'atrasado', 'pago', 'negociar', 'renegociar', 'fatura', 'plano', 'contrato', 'consumo',
+    'vencimento', 'contratação', 'cancelamento', 'renovação', 'informação', 'detalhe', 'quem'
+]
+
 # Dados mockados
 mocked_users = [
     {
@@ -14,7 +24,7 @@ mocked_users = [
         'empresas': ['vivo', 'claro'],
         'payment_methods': ['mastercard', 'pix'],
         'payment_history': {
-            'vivo': {'pagas': 40, 'atrasadas': 2},
+            'vivo': {'pagas': 40, 'atrasadas': 2}, 
             'claro': {'pagas': 35, 'atrasadas': 0},
         },
         'since': '2020-01-01',
@@ -63,22 +73,27 @@ def chatbot_view(request):
             user_info = next((user for user in mocked_users if user['id'] == user_id), None)
 
             if user_info:
-                # Criando o prompt com informações do usuário
-                user_details = (
-                    f"Nome: {user_info['nome']}, "
-                    f"Saldo Pendente: R${user_info['saldo_pendente']:.2f}, "
-                    f"Planos Contratados: {', '.join([plano['plano'] + ' (' + plano['tamanho_plano'] + ')' for plano in user_info['uso_planos_contratados']])}, "
-                    f"Consumo Médio: {', '.join([plano['plano'] + ': ' + str(plano['consumo_medio']) + 'GB' for plano in user_info['uso_planos_contratados']])}.\n"
-                    f"Histórico de Pagamentos: {', '.join([f'{empresa.capitalize()}: Pagas: {dados['pagas']}, Atrasadas: {dados['atrasadas']}' for empresa, dados in user_info['payment_history'].items()])}.\n"
-                )
+                # Verificando se a pergunta está relacionada ao suporte a clientes
+                if any(keyword in user_message.lower() for keyword in support_keywords):
+                    # Criando o prompt com informações do usuário
+                    user_details = (
+                        f"Nome: {user_info['nome']}, "
+                        f"Saldo Pendente: R${user_info['saldo_pendente']:.2f}, "
+                        f"Planos Contratados: {', '.join([plano['plano'] + ' (' + plano['tamanho_plano'] + ')' for plano in user_info['uso_planos_contratados']])}, "
+                        f"Consumo Médio: {', '.join([plano['plano'] + ': ' + str(plano['consumo_medio']) + 'GB' for plano in user_info['uso_planos_contratados']])}.\n"
+                        f"Histórico de Pagamentos: {', '.join([f'{empresa.capitalize()}: Pagas: {dados['pagas']}, Atrasadas: {dados['atrasadas']}' for empresa, dados in user_info['payment_history'].items()])}.\n"
+                    )
 
-                # Combinando os detalhes do usuário com a mensagem do usuário
-                prompt = f"{user_details}User: {user_message}\nChatbot:"
-                model = genai.GenerativeModel("gemini-1.5-flash")
+                    # Combinando os detalhes do usuário com a mensagem do usuário
+                    prompt = f"{user_details}User: {user_message}\nChatbot: Você é um assistente de suporte chamado Bemobi AI, responsável por oferecer um atendimento excepcional focado nos serviços de assinatura da Bemobi, como os planos Omni Pay e Omni Engage. Seu papel é esclarecer dúvidas do usuário sobre o uso dos planos contratados, histórico de pagamentos e métodos de pagamento disponíveis. Não forneça informações ou responda perguntas que não estejam relacionadas ao suporte ao cliente, como eventos, shows, política, ou notícias gerais. Caso o usuário tenha faturas em atraso, ofereça imediatamente opções de pagamento adequadas ao perfil do cliente para resolver a situação o mais rápido possível, você possui os dados do cliente então ele não ira te fornecer nada no chat."
+                    model = genai.GenerativeModel("gemini-1.5-flash")
 
-                # Gerando uma resposta usando o modelo Gemini
-                response = model.generate_content(prompt)
-                chatbot_reply = response.text.strip()
+                    # Gerando uma resposta usando o modelo Gemini
+                    response = model.generate_content(prompt)
+                    chatbot_reply = response.text.strip()
+                else:
+                    # Mensagem fora do escopo de suporte a clientes
+                    chatbot_reply = "Desculpe, essa questão não parece estar relacionada ao suporte de serviços de assinatura. Por favor, pergunte algo sobre seus planos, saldo ou pagamentos."
             else:
                 chatbot_reply = "Desculpe, não consegui encontrar suas informações."
 
